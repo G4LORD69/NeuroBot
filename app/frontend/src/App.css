@@ -1,0 +1,107 @@
+/* Brain Coach Telegram WebApp — Dark Mobile-First UI (v4) */
+@font-face {
+  font-family: "FigtreeVar";
+  src: url("https://fonts.gstatic.com/s/figtree/v7/pxiDyp8kv8JHgFVrJJLme1tIuPn.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root { color-scheme: dark; --accent: #22b8ff; --accent-2: #7c5cff; }
+html, body, #root, .App-shell { height: 100%; }
+body { font-family: "FigtreeVar", ui-sans-serif, system-ui; background: #0b0d10; color: #eaeef6; }
+
+/***** Tokens *****/
+:root {
+  --ink: #eaeef6;
+  --muted: #9aa4b2;
+  --panel: rgba(20, 24, 31, 0.66);
+  --panel-2: rgba(16, 20, 26, 0.75);
+  --line: rgba(255,255,255,0.06);
+  --success: #2dd4bf;
+  --danger: #fb7185;
+}
+
+/* Background — shader-like canvas layered below */
+.hero { position: relative; min-height: 62vh; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: -20% -10%;
+  background: radial-gradient(800px 400px at 90% -10%, rgba(124,92,255,.20), transparent),
+              radial-gradient(600px 300px at 0% 110%, rgba(34,184,255,.18), transparent);
+  opacity: 1; pointer-events: none; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(7,9,12,0.15), rgba(7,9,12,0.78)); pointer-events:none; }
+.shader-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.46; }
+
+.container { position: relative; z-index: 1; padding: 16px; max-width: 980px; margin: 0 auto; }
+
+/* Glass panels */
+.glass { background: var(--panel); backdrop-filter: blur(16px); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+.glass-2 { background: var(--panel-2); backdrop-filter: blur(20px); border: 1px solid var(--line); border-radius: 18px; }
+
+.header { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(10px); background: rgba(5,7,10,0.6); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
+.lang-switch { display:inline-flex; gap: 6px; align-items:center; padding: 4px; border-radius:999px; border:1px solid var(--line); background: rgba(255,255,255,0.04); }
+.lang-switch button { padding: 6px 10px; border-radius:999px; border:none; background:transparent; color: var(--muted); cursor:pointer; transition: background-color 160ms ease, color 160ms ease; }
+.lang-switch button.active { background: rgba(255,255,255,0.06); color: var(--ink); }
+
+.hero-grid { display:grid; grid-template-columns: 1fr; gap:12px; }
+@media (min-width: 860px) { .hero-grid { grid-template-columns: 1.2fr 1fr; gap:16px; } }
+
+.hero-card { padding: 18px; }
+.hero-title { font-size: clamp(22px, 5vw, 34px); font-weight: 900; letter-spacing: -0.02em; color: #f5f7fb; }
+.hero-sub { font-size: 14px; color: var(--muted); margin-top: 6px; }
+.cta-row { display:flex; gap:10px; margin-top:14px; flex-wrap: wrap; }
+.btn { appearance:none; border:none; border-radius: 12px; padding: 10px 14px; cursor:pointer; background: var(--accent); color:#071018; font-weight:800; box-shadow: 0 6px 20px rgba(34,184,255,0.28); transition: background-color 160ms ease, box-shadow 160ms ease; }
+.btn.secondary { background: rgba(255,255,255,0.06); color: #e5ecf5; box-shadow:none; border: 1px solid var(--line); }
+.btn:focus-visible { outline:2px solid rgba(34,184,255,0.5); outline-offset: 2px; }
+.btn:hover { filter: brightness(1.03); }
+
+.section-title { font-weight: 900; font-size: 16px; letter-spacing: -0.01em; margin-bottom: 10px; color:#f0f3fa; }
+
+/* Footer */
+.footer { text-align:center; color: var(--muted); padding: 24px; padding-bottom: 80px; }
+
+/* Daily Training skeleton */
+.stepper { display:flex; gap:6px; margin: 10px 0 16px; }
+.step { height: 6px; border-radius:999px; background: rgba(255,255,255,0.08); flex:1; overflow:hidden; }
+.step .fill { height: 100%; background: var(--accent); box-shadow: inset 0 0 12px rgba(34,184,255,0.35) }
+
+/* Bottom Tab Bar — mobile-first */
+.tabbar { position: fixed; bottom: 8px; left: 50%; transform: translateX(-50%); width: min(560px, calc(100% - 16px)); display:flex; gap:8px; background: rgba(14,18,25,0.8); backdrop-filter: blur(14px); border:1px solid var(--line); border-radius:16px; padding:8px; z-index:50; }
+.tab { flex:1; display:flex; align-items:center; justify-content:center; gap:8px; color: var(--muted); padding:10px; border-radius: 12px; border:1px solid transparent; background: transparent; cursor:pointer; transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease; }
+.tab.active { background: rgba(255,255,255,0.06); color: var(--ink); border-color: var(--line); }
+
+/* Dialog tweaks */
+.dialog-grid { display:grid; gap:10px; }
+.kpis { display:flex; gap:10px; flex-wrap: wrap; }
+.kpi { padding:10px 12px; border-radius:12px; background: rgba(255,255,255,0.04); border:1px solid var(--line); font-weight:700; }
+
+/* Summary card */
+.summary { display:grid; gap:10px; }
+.badges { display:flex; gap:8px; flex-wrap:wrap; }
+.badge { padding:6px 10px; border-radius:999px; border:1px solid var(--line); background: linear-gradient(90deg, rgba(34,184,255,0.25), rgba(124,92,255,0.25)); color: #eaeef6; font-weight:700; font-size:12px; }
+.final-score { display:flex; align-items:baseline; gap:10px; font-weight:900; font-size: 28px; }
+
+/* Calendar legend bullets */
+.legend { display:flex; gap:10px; align-items:center; color: var(--muted); font-size: 12px; }
+.dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+.dot.done { background: rgba(34,184,255,0.9); box-shadow: 0 0 10px rgba(34,184,255,0.5); }
+.dot.miss { background: rgba(255,255,255,0.25); }
+.dot.today { background: #fbbf24; }
+
+/* Week strip for Daily */
+.week-strip { display:flex; gap:8px; justify-content:space-between; margin: 12px 0; }
+.day-pill { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; }
+.day-pill .circle { width:18px; height:18px; border-radius:50%; border:1px solid var(--line); background: rgba(255,255,255,0.04); }
+.day-pill.done .circle { background: rgba(34,184,255,0.9); box-shadow: 0 0 12px rgba(34,184,255,0.45); border-color: transparent; }
+.day-pill.today .circle { background: #fbbf24; }
+.day-pill .w { color: var(--muted); font-size: 10px; }
+
+/* Library cards */
+.card-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:10px; }
+@media (min-width: 560px) { .card-grid { grid-template-columns: repeat(3, 1fr); } }
+.gcard { position:relative; padding:14px; border-radius:16px; border:1px solid var(--line); background: rgba(255,255,255,0.04); transition: transform 140ms ease, box-shadow 140ms ease; }
+.gcard:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.3); }
+.gbadge { position:absolute; top:8px; right:8px; font-size:10px; padding:4px 8px; border-radius:999px; border:1px solid var(--line); color:#eaf6ff; background: rgba(34,184,255,0.16); }
+.gtitle { font-weight:800; margin-top:4px; }
+.gdesc { color: var(--muted); font-size: 12px; margin-top: 2px; min-height: 32px; }
+.gactions { display:flex; gap:8px; margin-top:10px; }
